@@ -21,7 +21,7 @@ export const SearchBar = () => {
       <input
         type="text"
         placeholder="Search"
-        className="text-xl p-1 border border-gray-300 max-w-xs"
+        className="text-xl w-full p-1 border border-gray-300 max-w-xs"
         onChange={ onQueryChanged }
       />
 

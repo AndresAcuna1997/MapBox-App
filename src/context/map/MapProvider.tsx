@@ -5,6 +5,7 @@ import { mapReducer } from './mapReducer';
 import { PlacesContext } from '../places/PlacesContext';
 import { directionApi } from '../../apis/directionsApi';
 import { Directions } from '../../interfaces/directions.interface';
+import removeCurrentTravel from '../../helpers/removeCurrentTravel';
 
 export interface MapState {
   isMapReady: boolean;
@@ -53,6 +54,16 @@ export const MapProvider = ( { children }: Props ) => {
 
     dispatch( { type: 'setMarkers', payload: newMarkers } );
 
+
+  }, [ places ] );
+
+
+  useEffect( () => {
+    if ( places?.length !== 0 ) return;
+    if ( !state.map?.getLayer( 'RouteString' ) ) return;
+
+    removeCurrentTravel( state.map!, 'RouteString' );
+    dispatch( { type: 'setTravelDetail', payload: { kms: null, travelTime: null } } );
 
   }, [ places ] );
 
@@ -116,8 +127,7 @@ export const MapProvider = ( { children }: Props ) => {
     };
 
     if ( state.map?.getLayer( 'RouteString' ) ) {
-      state.map.removeLayer( 'RouteString' );
-      state.map.removeSource( 'RouteString' );
+      removeCurrentTravel( state.map, 'RouteString' );
     }
 
     state.map?.addSource( 'RouteString', sourceData );

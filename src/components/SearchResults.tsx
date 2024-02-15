@@ -43,7 +43,7 @@ export const SearchResults = () => {
             <h6 className="font-bold mb-1">{ place.text_en }</h6>
             <p className="text-sm mb-1">{ place.place_name_en }</p>
             <div className="flex gap-2">
-              <button onClick={ () => getRoute( place ) } className="text-blue-700 font-semibold border border-blue-700 mb-1 px-2 py-1 rounded">
+              <button onClick={ () => getRoute( place ) } className={`text-blue-700 font-semibold border border-blue-700 mb-1 px-2 py-1 rounded ${ activeLocation === place.id ? 'border-white text-white' : '' }`}>
                 Address
               </button>
             </div>
